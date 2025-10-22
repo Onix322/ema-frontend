@@ -1,5 +1,44 @@
-<mat-grid-list id="interface" cols="2" [rowHeight]="defaultRowHeight">
-  <mat-grid-tile #header id="interface-header" colspan="2" [rowspan]="layoutSettings.headerH"  >1</mat-grid-tile>
-  <mat-grid-tile id="interface-menu" colspan="1" [rowspan]="layoutSettings.menuH">2</mat-grid-tile>
-  <mat-grid-tile id="interface-content" colspan="1" [rowspan]="layoutSettings.contentH">3</mat-grid-tile>
-</mat-grid-list>
+<section>
+  <mat-grid-list id="interface-container" [cols]="5" [rowHeight]="defaultRowHeight">
+    <mat-grid-tile id="interface-header" colspan="5" [rowspan]="layoutSettings.headerH"  >
+      <div id="header-container" class="container">
+        <div class="header-title">
+          <h2>EMS - Employee Management System</h2>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile id="interface-menu" colspan="1" [rowspan]="layoutSettings.menuH">
+      <div id="menu-container" class="container">
+        <div id="user-container" >
+          <img src="user-img">
+          <div class="user-details">
+            <h3>Alex Dobos</h3>
+            <p>Klar-delivery Gmbh</p>
+            <p class="permission-group">Admin</p>
+          </div>
+        </div>
+        <div id="actions-container">
+          <button matButton="filled" class="action-btn">Add car</button>
+          <button matButton="filled" class="action-btn">Edit car</button>
+          <button matButton="filled" class="action-btn">Delete car</button>
+          <button matButton="filled" class="action-btn">Request car</button>
+          <button matButton="filled" class="action-btn">Assign car</button>
+          <button matButton="filled" class="action-btn">Add employee</button>
+          <button matButton="filled" class="action-btn">Delete employee</button>
+          <button matButton="filled" class="action-btn">Edit employee</button>
+          <button matButton="filled" class="action-btn action-settings">Settings</button>
+          <button matButton="filled" class="action-btn action-logout">Log out</button>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile id="interface-content" colspan="4" [rowspan]="layoutSettings.contentH">
+      <div id="content-container" class="container">
+        <p>content</p>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="notification">
+    <h3>Notification</h3>
+  </div>
+</section>

@@ -1,5 +1,6 @@
 import {ChangeDetectorRef, Component, signal} from '@angular/core';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatButton} from '@angular/material/button';
 
 //measured in px
 type WindowDimensions = {
@@ -16,11 +17,12 @@ type LayoutSetting = {
   contentW: number,
   menuH: number,
   menuW: number,
+  maxMenuW: number,
 }
 
 @Component({
   selector: 'app-root',
-  imports: [MatGridList, MatGridTile],
+  imports: [MatGridList, MatGridTile, MatButton],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -41,6 +43,7 @@ export class App {
     contentW: this.defaultColWidth + 10,
     menuH: this.defaultRowHeight + 10,
     menuW: this.defaultColWidth + 10,
+    maxMenuW: 100,
   }
 
   //Window Settings
