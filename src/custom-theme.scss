@@ -8,7 +8,6 @@
 :root {
   @include mat.fab-overrides((
     container-elevation-shadow: -4px -4px 5px 0px rgba(0, 0, 0, 0.5),
-    container-color: black,
   ));
 
   @include mat.button-overrides((
@@ -26,6 +25,15 @@
 
     outlined-outline-color: #1a73e8,
     outlined-label-text-color: #1a73e8,
+
+  ));
+
+  @include mat.expansion-overrides((
+    actions-divider-color: white,
+    container-background-color: white,
+    container-shape: 0,
+    header-hover-state-layer-color: #e5f3ff,
+    header-text-size: 16px
   ));
 }
 
@@ -37,6 +45,7 @@ html {
     ),
     typography: Roboto,
     density: 0,
+    weight: 400,
   ));
 
 }
@@ -56,4 +65,16 @@ body {
 
   // Reset the user agent margin.
   margin: 0;
+}
+
+mat-expansion-panel-header{
+  font-size: 16px !important;
+  justify-items: start;
+  padding-left: 15px !important;
+}
+
+mat-icon{
+  font-size: 20px !important;
+  align-content: center;
+  width: fit-content;
 }

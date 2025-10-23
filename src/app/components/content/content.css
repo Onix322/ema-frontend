@@ -1,0 +1,20 @@
+
+/*CONTENT*/
+
+#content-container{
+  padding: 20px;
+  height: calc(100% - 50px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-menu{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.content-menu-btn{
+  background: #e4f6ff !important;
+}

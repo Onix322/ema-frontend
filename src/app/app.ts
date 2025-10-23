@@ -1,6 +1,16 @@
-import {ChangeDetectorRef, Component, signal} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, signal, Type, ViewChild, ViewContainerRef} from '@angular/core';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {EmployeeContent} from './components/content/employee-content/employee-content';
+import {QuickActions} from './components/content/quick-actions/quick-actions';
+import {Q} from '@angular/cdk/keycodes';
+import {
+  MatExpansionPanel,
+  MatExpansionPanelDescription,
+  MatExpansionPanelHeader,
+  MatExpansionPanelTitle
+} from '@angular/material/expansion';
 
 //measured in px
 type WindowDimensions = {
@@ -22,12 +32,16 @@ type LayoutSetting = {
 
 @Component({
   selector: 'app-root',
-  imports: [MatGridList, MatGridTile, MatButton],
+  imports: [MatGridList, MatGridTile, MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 
-export class App {
+export class App implements AfterViewInit{
+
+  @ViewChild("content", {read: ElementRef<HTMLElement>})
+  protected contentRef!: ElementRef<HTMLElement>
+  private currentContent: Type<any> | null = null
 
   protected readonly title = signal('ema-frontend');
   protected defaultRowHeight = 1;
@@ -51,14 +65,33 @@ export class App {
     height: 0,
     width: 0,
   }
+  protected readonly EmployeeContent = EmployeeContent;
 
-  constructor() {
+  constructor(private vcr: ViewContainerRef) {
     this.windowDimensions = this.collectDimensions()
     this.layoutSettings = this.initLayout()
   }
 
+  ngAfterViewInit() {
+    if(this.currentContent == null) this.currentContent = QuickActions
+    this.displayContent<any>(this.currentContent, this.contentRef.nativeElement)
+  }
+
+  protected displayContent<C>(component: Type<C>, appendTo?: HTMLElement): ElementRef<HTMLElement> {
+    const content = this.vcr.createComponent(component)
+    const contentHTML = <ElementRef<HTMLElement>>content.location
+    if (appendTo) {
+      for (let child of appendTo.children) {
+        appendTo.removeChild(child)
+      }
+      appendTo.appendChild(contentHTML.nativeElement)
+    }
+    this.currentContent = component
+    return contentHTML
+  }
+
   private initLayout(): LayoutSetting {
-    if(this.layoutSettings.responsive){
+    if (this.layoutSettings.responsive) {
       this.initLayoutDimensions(this.windowDimensions)
       this.initResponsiveness()
       return this.layoutSettings
@@ -92,4 +125,6 @@ export class App {
       width: window.innerWidth / 2
     }
   }
+
+  protected readonly QuickActions = QuickActions;
 }

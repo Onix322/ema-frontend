@@ -3,6 +3,7 @@
     <mat-grid-tile id="interface-header" colspan="5" [rowspan]="layoutSettings.headerH"  >
       <div id="header-container" class="container">
         <div class="header-title">
+          <img src="https://klar-delivery.de/wp-content/uploads/2022/02/Logo-freigestellt-1-e1645354146250.png">
           <h2>EMS - Employee Management System</h2>
         </div>
       </div>
@@ -18,23 +19,38 @@
           </div>
         </div>
         <div id="actions-container">
-          <button matButton="filled" class="action-btn">Add car</button>
-          <button matButton="filled" class="action-btn">Edit car</button>
-          <button matButton="filled" class="action-btn">Delete car</button>
-          <button matButton="filled" class="action-btn">Request car</button>
-          <button matButton="filled" class="action-btn">Assign car</button>
-          <button matButton="filled" class="action-btn">Add employee</button>
-          <button matButton="filled" class="action-btn">Delete employee</button>
-          <button matButton="filled" class="action-btn">Edit employee</button>
-          <button matButton="filled" class="action-btn action-settings">Settings</button>
-          <button matButton="filled" class="action-btn action-logout">Log out</button>
+          <button matButton="filled" class="action-btn" (click)="displayContent(QuickActions, contentRef.nativeElement)">
+            <mat-icon>bolt</mat-icon>
+            Quick Actions
+          </button>
+
+          <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>management</mat-icon>
+                Management
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <button matButton="filled" class="action-btn" (click)="displayContent(EmployeeContent, contentRef.nativeElement)">Employee</button>
+            <button matButton="filled" class="action-btn">Assets</button>
+          </mat-expansion-panel>
+          <button matButton="filled" class="action-btn">
+            <mat-icon>manage_accounts</mat-icon>
+            Administrative
+          </button>
+          <button matButton="filled" class="action-btn action-settings">
+            <mat-icon>settings</mat-icon>
+            Settings
+          </button>
+          <button matButton="filled" class="action-btn action-logout">
+            <mat-icon>logout</mat-icon>
+            Log out
+          </button>
         </div>
       </div>
     </mat-grid-tile>
-    <mat-grid-tile id="interface-content" colspan="4" [rowspan]="layoutSettings.contentH">
-      <div id="content-container" class="container">
-        <p>content</p>
-      </div>
+    <mat-grid-tile #content id="interface-content" colspan="4" [rowspan]="layoutSettings.contentH">
+
     </mat-grid-tile>
   </mat-grid-list>
 
