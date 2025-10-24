@@ -4,13 +4,8 @@ import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {EmployeeContent} from './components/content/employee-content/employee-content';
 import {QuickActions} from './components/content/quick-actions/quick-actions';
-import {Q} from '@angular/cdk/keycodes';
-import {
-  MatExpansionPanel,
-  MatExpansionPanelDescription,
-  MatExpansionPanelHeader,
-  MatExpansionPanelTitle
-} from '@angular/material/expansion';
+import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
+import {CarsContent} from './components/content/cars-content/cars-content';
 
 //measured in px
 type WindowDimensions = {
@@ -32,22 +27,18 @@ type LayoutSetting = {
 
 @Component({
   selector: 'app-root',
-  imports: [MatGridList, MatGridTile, MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatExpansionPanelDescription],
+  imports: [MatGridList, MatGridTile, MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
 
-export class App implements AfterViewInit{
+export class App implements AfterViewInit {
 
   @ViewChild("content", {read: ElementRef<HTMLElement>})
   protected contentRef!: ElementRef<HTMLElement>
-  private currentContent: Type<any> | null = null
-
   protected readonly title = signal('ema-frontend');
   protected defaultRowHeight = 1;
   protected defaultColWidth = 1;
-
-  //Layout Settings
   //default values
   protected layoutSettings: LayoutSetting = {
     responsive: true,
@@ -60,12 +51,15 @@ export class App implements AfterViewInit{
     maxMenuW: 100,
   }
 
+  //Layout Settings
   //Window Settings
   protected windowDimensions: WindowDimensions = {
     height: 0,
     width: 0,
   }
   protected readonly EmployeeContent = EmployeeContent;
+  protected readonly QuickActions = QuickActions;
+  private currentContent: Type<any> | null = null
 
   constructor(private vcr: ViewContainerRef) {
     this.windowDimensions = this.collectDimensions()
@@ -73,7 +67,7 @@ export class App implements AfterViewInit{
   }
 
   ngAfterViewInit() {
-    if(this.currentContent == null) this.currentContent = QuickActions
+    if (this.currentContent == null) this.currentContent = QuickActions
     this.displayContent<any>(this.currentContent, this.contentRef.nativeElement)
   }
 
@@ -126,5 +120,5 @@ export class App implements AfterViewInit{
     }
   }
 
-  protected readonly QuickActions = QuickActions;
+  protected readonly CarsContent = CarsContent;
 }

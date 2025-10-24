@@ -6,6 +6,7 @@
 @use '@angular/material' as mat;
 
 :root {
+
   @include mat.fab-overrides((
     container-elevation-shadow: -4px -4px 5px 0px rgba(0, 0, 0, 0.5),
   ));
@@ -15,24 +16,21 @@
     filled-label-text-color: balck,
     filled-container-shape: 8px,
 
-    // 🔹 Culoarea stratului (hover, focus, pressed)
-    filled-state-layer-color: #1669c1,
+    // color layer (hover, focus, pressed)
+    filled-state-layer-color: #edf5ff,
 
-    // 🔹 Opacitățile (hover/focus/pressed)
-    filled-hover-state-layer-opacity: 0.08,
-    filled-focus-state-layer-opacity: 0.1,
-    filled-pressed-state-layer-opacity: 0.12,
 
-    outlined-outline-color: #1a73e8,
-    outlined-label-text-color: #1a73e8,
-
+    // opacity (hover/focus/pressed)
+    filled-hover-state-layer-opacity: 1,
+    filled-focus-state-layer-opacity: 1,
+    filled-pressed-state-layer-opacity: 1,
   ));
 
   @include mat.expansion-overrides((
     actions-divider-color: white,
     container-background-color: white,
     container-shape: 0,
-    header-hover-state-layer-color: #e5f3ff,
+    header-hover-state-layer-color: #edf5ff,
     header-text-size: 16px
   ));
 }
@@ -67,10 +65,23 @@ body {
   margin: 0;
 }
 
-mat-expansion-panel-header{
+.mat-expansion-panel-body{
+  padding: 0 !important;
+}
+
+.action-logout:hover > .mat-ripple.mat-mdc-button-ripple{
+  background-color: #ffb7b7 !important;
+}
+
+.mat-expansion-panel-header{
   font-size: 16px !important;
   justify-items: start;
   padding-left: 15px !important;
+}
+
+.mat-expansion-panel-header.mat-focused,
+.mat-expansion-panel-header.mat-expanded {
+  background-color: #edf5ff !important;
 }
 
 mat-icon{
