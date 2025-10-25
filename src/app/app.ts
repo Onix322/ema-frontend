@@ -6,6 +6,7 @@ import {EmployeeContent} from './components/content/employee-content/employee-co
 import {QuickActions} from './components/content/quick-actions/quick-actions';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
 import {CarsContent} from './components/content/cars-content/cars-content';
+import {DisplayContent} from './service/display-content';
 
 //measured in px
 type WindowDimensions = {
@@ -29,7 +30,7 @@ type LayoutSetting = {
   selector: 'app-root',
   imports: [MatGridList, MatGridTile, MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 
 export class App implements AfterViewInit {
@@ -39,6 +40,8 @@ export class App implements AfterViewInit {
   protected readonly title = signal('ema-frontend');
   protected defaultRowHeight = 1;
   protected defaultColWidth = 1;
+  protected readonly CarsContent = CarsContent;
+
   //default values
   protected layoutSettings: LayoutSetting = {
     responsive: true,
@@ -61,27 +64,20 @@ export class App implements AfterViewInit {
   protected readonly QuickActions = QuickActions;
   private currentContent: Type<any> | null = null
 
-  constructor(private vcr: ViewContainerRef) {
+  constructor(private dc: DisplayContent, private vcr: ViewContainerRef) {
     this.windowDimensions = this.collectDimensions()
     this.layoutSettings = this.initLayout()
+    this.dc.vcr = this.vcr
   }
 
   ngAfterViewInit() {
     if (this.currentContent == null) this.currentContent = QuickActions
     this.displayContent<any>(this.currentContent, this.contentRef.nativeElement)
+    this.dc.content = this.contentRef
   }
 
-  protected displayContent<C>(component: Type<C>, appendTo?: HTMLElement): ElementRef<HTMLElement> {
-    const content = this.vcr.createComponent(component)
-    const contentHTML = <ElementRef<HTMLElement>>content.location
-    if (appendTo) {
-      for (let child of appendTo.children) {
-        appendTo.removeChild(child)
-      }
-      appendTo.appendChild(contentHTML.nativeElement)
-    }
-    this.currentContent = component
-    return contentHTML
+  public displayContent<C>(component: Type<C>, appendTo?: HTMLElement): ElementRef<HTMLElement> {
+    return this.dc.displayContent<C>(component, appendTo)
   }
 
   private initLayout(): LayoutSetting {
@@ -120,5 +116,4 @@ export class App implements AfterViewInit {
     }
   }
 
-  protected readonly CarsContent = CarsContent;
 }

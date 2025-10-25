@@ -1,0 +1,48 @@
+<div id="content-container" class="container">
+  <div class="content-menu">
+    <button matButton="filled" class="content-menu-btn" (click)="goBackAction()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+    <button matButton="filled" class="content-menu-btn">
+      <mat-icon>check</mat-icon>
+      Submit
+    </button>
+  </div>
+  <div class="content-content">
+    <form class="employee-form">
+        <mat-form-field class="field-full-width">
+          <mat-label>Name</mat-label>
+          <input matInput>
+        </mat-form-field>
+
+        <mat-form-field class="field-full-width">
+          <mat-label>Working hours / Week</mat-label>
+          <input matInput placeholder="Ex: 48">
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Barge Number</mat-label>
+          <input matInput placeholder="Ex. Darmstadt">
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Assign a car</mat-label>
+          <mat-select>
+              <mat-option value="test">Test</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Select a role</mat-label>
+        <mat-select>
+          @for (role of roles; track role) {
+            <mat-option [value]="role">{{role}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+</div>

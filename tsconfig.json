@@ -30,5 +30,6 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "include": ["src/app/types/*.ts", "src/app/types/*.d.ts"]
 }

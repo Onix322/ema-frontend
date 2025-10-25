@@ -1,9 +1,10 @@
 <div id="content-container" class="container">
   <div class="content-menu">
-    <button matButton="filled" class="content-menu-btn" aria-label="Example icon button with a menu icon">
+    <button matButton="filled" class="content-menu-btn" (click)="displayContent()">
       <mat-icon>add</mat-icon>
       Add
     </button>
+    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" aria-label="Select page of users"></mat-paginator>
 
     <div class="filter">
       <label>
@@ -22,18 +23,23 @@
       </ng-container>
 
       <ng-container matColumnDef="numberPlate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Number plate</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Number plate </th>
         <td mat-cell *matCellDef="let row"> {{ row.numberPlate }}</td>
       </ng-container>
 
       <ng-container matColumnDef="vin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> VIN</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> VIN </th>
         <td mat-cell *matCellDef="let row"> {{ row.vin }}</td>
       </ng-container>
 
       <ng-container matColumnDef="manufacturer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Car</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer </th>
         <td mat-cell *matCellDef="let row"> {{ row.manufacturer }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="state">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+        <td mat-cell *matCellDef="let row"> {{ row.state }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -45,6 +51,5 @@
       </tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 </div>

@@ -5,8 +5,12 @@ import {
   MatCellDef,
   MatColumnDef,
   MatHeaderCell,
-  MatHeaderCellDef, MatHeaderRow, MatHeaderRowDef,
-  MatNoDataRow, MatRow, MatRowDef,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatNoDataRow,
+  MatRow,
+  MatRowDef,
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
@@ -14,13 +18,9 @@ import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-
-declare interface Car {
-  id: string,
-  numberPlate: string,
-  vin: string,
-  manufacturer: string
-}
+import {Car, CarState} from '../../../types/car.types';
+import {DisplayContent} from '../../../service/display-content';
+import {AddCarContent} from '../add-car-content/add-car-content';
 
 const CARS = [
   "M AZ 2833",
@@ -52,27 +52,30 @@ const CARS = [
 })
 export class CarsContent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'numberPlate', 'vin', 'manufacturer'];
+  displayedColumns: string[] = ['id', 'numberPlate', 'vin', 'manufacturer', 'state'];
   dataSource: MatTableDataSource<Car>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
 
+  constructor(private dc: DisplayContent) {
+    // Create 100 cars
+    // const users = Array.from({length: 100}, (_, k) => createNewUser(k));
 
-  constructor() {
-    // Create 100 users
-    // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    const users = Array.from({length: CARS.length}, (_, k) => createNewCar(k));
+    const cars = Array.from({length: CARS.length}, (_, k) => createNewCar(k));
 
     // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
+    this.dataSource = new MatTableDataSource(cars);
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+  }
+
+  protected displayContent(){
+    return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
   }
 
   applyFilter(event: Event) {
@@ -87,10 +90,12 @@ export class CarsContent implements AfterViewInit {
 
 /** Builds and returns a new User. */
 function createNewCar(id: number): Car {
+  const states = Object.values(CarState)
   return {
     id: id.toString(),
     numberPlate: id.toString(),
     manufacturer: CARS[id],
     vin: CARS[id],
+    state: states[Math.round(Math.random() * states.length - 1)]
   };
 }

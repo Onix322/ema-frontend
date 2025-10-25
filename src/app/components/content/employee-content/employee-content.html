@@ -1,9 +1,11 @@
 <div id="content-container" class="container">
   <div class="content-menu">
-    <button matButton="filled" class="content-menu-btn" aria-label="Example icon button with a menu icon">
+    <button matButton="filled" class="content-menu-btn" aria-label="Example icon button with a menu icon"
+            (click)="displayContent(AddEmployeeContent)">
       <mat-icon>add</mat-icon>
       Add
     </button>
+    <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" aria-label="Select page of users"></mat-paginator>
 
     <div class="filter">
       <label>
@@ -19,45 +21,50 @@
       <table mat-table [dataSource]="dataSource" matSort>
 
         <ng-container matColumnDef="id">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee ID</th>
+          <a href="www.google.com">
+            <td mat-cell *matCellDef="let row">
+              {{ row.id }}
+            </td>
+          </a>
+
         </ng-container>
 
         <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name</th>
+          <td mat-cell *matCellDef="let row"> {{ row.name }}</td>
         </ng-container>
 
         <ng-container matColumnDef="car">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Car </th>
-          <td mat-cell *matCellDef="let row"> {{row.car}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Car</th>
+          <td mat-cell *matCellDef="let row"> {{ row.car }}</td>
         </ng-container>
 
         <ng-container matColumnDef="workingHours">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Working Hours / Week </th>
-          <td mat-cell *matCellDef="let row"> {{row.workingHours}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Working Hours / Week</th>
+          <td mat-cell *matCellDef="let row"> {{ row.workingHours }}</td>
         </ng-container>
 
         <ng-container matColumnDef="badge">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Badge Number </th>
-          <td mat-cell *matCellDef="let row"> {{row.badge}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Badge Number</th>
+          <td mat-cell *matCellDef="let row"> {{ row.badge }}</td>
         </ng-container>
 
         <ng-container matColumnDef="role">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role </th>
-          <td mat-cell *matCellDef="let row"> {{row.role}} </td>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Role</th>
+          <td mat-cell *matCellDef="let row"> {{ row.role }}</td>
         </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <div class="table" style="color: red">
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </div>
 
         <!-- Row shown when there is no matching data. -->
         <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
         </tr>
       </table>
-
-      <mat-paginator [pageSizeOptions]="[10, 20, 30, 100]" aria-label="Select page of users"></mat-paginator>
     </div>
 
   </div>

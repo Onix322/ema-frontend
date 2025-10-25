@@ -1,0 +1,40 @@
+<div id="content-container" class="container">
+  <div class="content-menu">
+    <button matButton="filled" class="content-menu-btn" (click)="goBackAction()">
+      <mat-icon>arrow_back</mat-icon>
+      Back
+    </button>
+
+    <button matButton="filled" class="content-menu-btn">
+      <mat-icon>check</mat-icon>
+      Submit
+    </button>
+  </div>
+  <div class="content-content">
+    <form class="employee-form">
+      <mat-form-field class="field-full-width">
+        <mat-label>Number plate</mat-label>
+        <input matInput placeholder="Ex: MAZ2833">
+      </mat-form-field>
+
+      <mat-form-field class="field-full-width">
+        <mat-label>VIN</mat-label>
+        <input matInput placeholder="Ex: W2373G3D3SDD33">
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Manufacturer</mat-label>
+        <input matInput placeholder="Ex. Mercedes-benz">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>State</mat-label>
+        <mat-select placeholder="Choose an option">
+          @for (state of states; track state){
+            <mat-option [value]="state">{{state}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    </form>
+  </div>
+</div>

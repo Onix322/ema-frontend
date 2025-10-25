@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Type, ViewChild} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {
@@ -18,20 +18,10 @@ import {
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatInput} from '@angular/material/input';
+import {UserData, UserRole} from '../../../types/user.types';
+import {DisplayContent} from '../../../service/display-content';
+import {AddEmployeeContent} from '../add-employee-content/add-employee-content';
 
-export interface UserData {
-  id: string;
-  name: string;
-  car: string;
-  workingHours: number;
-  badge: number;
-  role: string;
-}
-
-const ROLES: string[] = [
-  'User',
-  'Admin'
-]
 
 const NAMES: string[] = [
   'Alexandru Dobos',
@@ -74,8 +64,9 @@ export class EmployeeContent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+  protected readonly AddEmployeeContent = AddEmployeeContent;
 
-  constructor() {
+  constructor(private dc: DisplayContent) {
     // Create 100 users
     // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
 
@@ -98,6 +89,10 @@ export class EmployeeContent implements AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
+
+  protected displayContent<C>(component: Type<C>) {
+    return this.dc.displayContent(component, this.dc.content?.nativeElement)
+  }
 }
 
 /** Builds and returns a new User. */
@@ -109,6 +104,6 @@ function createNewUser(id: number): UserData {
     workingHours: Math.round(Math.random() * 48),
     car: "M AZ 2833",
     badge: Math.round(Math.random() * 2000000),
-    role: ROLES[Math.round(Math.random())],
+    role: Object.values(UserRole)[Math.round(Math.random())]
   };
 }
