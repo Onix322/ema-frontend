@@ -5,7 +5,7 @@
       Back
     </button>
 
-    <button matButton="filled" class="content-menu-btn">
+    <button matButton="filled" class="content-menu-btn" (click)="submit()">
       <mat-icon>check</mat-icon>
       Submit
     </button>
@@ -14,31 +14,31 @@
     <form class="employee-form">
         <mat-form-field class="field-full-width">
           <mat-label>Name</mat-label>
-          <input matInput>
+          <input matInput type="text" name="name" [(ngModel)]="name">
         </mat-form-field>
 
         <mat-form-field class="field-full-width">
           <mat-label>Working hours / Week</mat-label>
-          <input matInput placeholder="Ex: 48">
+          <input matInput placeholder="Ex: 48" type="number" name="workingHours" [(ngModel)]="workingHours">
         </mat-form-field>
 
         <mat-form-field class="example-full-width">
           <mat-label>Barge Number</mat-label>
-          <input matInput placeholder="Ex. Darmstadt">
+          <input matInput placeholder="Ex. 2038298398283" name="badge" [(ngModel)]="badge">
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Assign a car</mat-label>
-          <mat-select>
-              <mat-option value="test">Test</mat-option>
+          <mat-select name="car" [(ngModel)]="car">
+              <mat-option value="none">None</mat-option>
           </mat-select>
         </mat-form-field>
 
       <mat-form-field>
         <mat-label>Select a role</mat-label>
-        <mat-select>
+        <mat-select name="role" [(ngModel)]="role">
           @for (role of roles; track role) {
-            <mat-option [value]="role">{{role}}</mat-option>
+            <mat-option [value]="role">{{role.charAt(0) + role.slice(1).toLowerCase()}}</mat-option>
           }
         </mat-select>
       </mat-form-field>

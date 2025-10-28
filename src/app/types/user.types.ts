@@ -1,12 +1,14 @@
+import {Car} from './car.types';
+
 export interface UserData {
-  id: string;
+  id: string | null;
   name: string;
-  car: string;
+  car: Car | null;
   workingHours: number;
   badge: number;
   role: string;
 }
 
 export enum UserRole {
-  ADMIN = 'Admin', USER = 'User'
+  ADMIN = 'ADMIN', USER = 'USER'
 }

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {DisplayContent} from '../../../service/display-content';
@@ -6,7 +6,10 @@ import {EmployeeContent} from '../employee-content/employee-content';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {UserRole} from '../../../types/user.types';
+import {UserData, UserRole} from '../../../types/user.types';
+import {Car} from '../../../types/car.types';
+import {FormsModule} from '@angular/forms';
+import {EmployeeService} from '../../../service/employee-service';
 
 @Component({
   selector: 'app-add-employee-content',
@@ -17,16 +20,40 @@ import {UserRole} from '../../../types/user.types';
     MatFormField,
     MatInput,
     MatSelect,
-    MatOption
+    MatOption,
+    FormsModule
   ],
+  standalone: true,
+  providers: [EmployeeService],
   templateUrl: './add-employee-content.html',
   styleUrls: ['./add-employee-content.css', '../content.css']
 })
 export class AddEmployeeContent {
 
+  @Input({
+    required: true
+  })
+  protected name!: string;
+  @Input({
+    required: true
+  })
+  protected workingHours!: number;
+  @Input({
+    required: true
+  })
+  protected badge!: number;
+  @Input({
+    required: true
+  })
+  protected car!: Car | null | "none";
+  @Input({
+    required: true
+  })
+  protected role!: UserRole;
+
   protected roles: Array<string | UserRole>;
 
-  constructor(private dc: DisplayContent) {
+  constructor(private dc: DisplayContent, private employeeService: EmployeeService) {
     this.roles = Object.values(UserRole)
   }
 
@@ -34,4 +61,29 @@ export class AddEmployeeContent {
     return this.dc.displayContent(EmployeeContent, this.dc?.content?.nativeElement)
   }
 
+  protected submit(){
+
+    this.car = this.car == "none" ? null : this.car
+
+    const body: UserData = {
+      id: null,
+      name: this.name,
+      car: this.car,
+      workingHours: this.workingHours,
+      badge: this.badge,
+      role: this.role
+    }
+
+    console.log(body)
+
+    this.employeeService.create(body).subscribe({
+      next: (response) => {
+        console.log(response)
+        alert("User " + response.data.id + "(" + response.data.name + ") has been created successfully!")
+      },
+      error: (err) => {
+        throw new Error(err)
+      }
+    })
+  }
 }

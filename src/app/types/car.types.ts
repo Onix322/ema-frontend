@@ -7,9 +7,9 @@ export interface Car {
 }
 
 export enum CarState{
-  MECHANIC = 'Mechanic',
-  GROUNDED = 'Grounded',
-  AVAILABLE = 'Available',
-  ASSIGNED = 'Assigned',
-  STANDBY = 'Standby',
-}
+    MECHANIC = 'Mechanic',
+    GROUNDED = 'Grounded',
+    AVAILABLE = 'Available',
+    ASSIGNED = 'Assigned',
+    STANDBY = 'Standby',
+  }
