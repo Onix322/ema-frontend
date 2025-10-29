@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, Type, ViewChild, ViewContainerRef} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {AfterViewInit, Component, signal, Type, ViewChild} from '@angular/core';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {
   MatCell,
@@ -18,10 +18,12 @@ import {
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatInput} from '@angular/material/input';
-import {UserData, UserRole} from '../../../types/user.types';
+import {UserData} from '../../../types/user.types';
 import {DisplayContent} from '../../../service/display-content';
 import {AddEmployeeContent} from '../add-employee-content/add-employee-content';
 import {EmployeeService} from '../../../service/employee-service';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 
 @Component({
@@ -42,30 +44,34 @@ import {EmployeeService} from '../../../service/employee-service';
     MatRowDef,
     MatNoDataRow,
     MatInput,
-    MatSort
+    MatSort,
+    MatMenu,
+    MatMenuTrigger,
+    MatMenuItem,
+    MatIconButton,
+    MatProgressSpinner
   ],
   templateUrl: './employee-content.html',
   styleUrls: ['./employee-content.css', '../content.css']
 })
 export class EmployeeContent implements AfterViewInit {
 
-  displayedColumns: string[] = ['id', 'name', 'car', 'workingHours', 'badge', 'role'];
+  displayedColumns: string[] = ['name', 'car', 'workingHours', 'badge', 'role'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   protected readonly AddEmployeeContent = AddEmployeeContent;
-  private users: UserData[] = [];
+
+  protected fetchingData = signal(false)
 
   constructor(private dc: DisplayContent, private employeeService: EmployeeService) {
-    // Create 100 users
-    // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-    this.getAll()
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(this.users);
+    this.dataSource = new MatTableDataSource();
   }
 
   ngAfterViewInit() {
+    this.getAll()
+
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -83,12 +89,35 @@ export class EmployeeContent implements AfterViewInit {
     return this.dc.displayContent(component, this.dc.content?.nativeElement)
   }
 
-  private getAll() {
-    return this.employeeService.getAll().subscribe({
+  protected deleteUser(uuid: string) {
+    return this.employeeService.delete(uuid).subscribe({
       next: (response) => {
+        this.dataSource._updateChangeSubscription()
+        alert("User deleted");
         console.log(response)
-        this.users = response.data
+      },
+      error: (err) =>{
+        throw new Error(err)
       }
     })
+  }
+
+  private getAll() {
+    this.fetchingData.set(true)
+    this.employeeService.getAll().subscribe({
+      next: (response) => {
+        // this.dataSource.connect().next(response.data)
+        this.dataSource = new MatTableDataSource(response.data)
+        this.fetchingData.set(false)
+      },
+      error: (err) => {
+        this.dataSource.disconnect()
+        this.fetchingData.set(false)
+        throw new Error(err)
+      }
+    })
+    // setTimeout(() => {
+    //
+    // }, 1000)
   }
 }

@@ -5,7 +5,7 @@
       Back
     </button>
 
-    <button matButton="filled" class="content-menu-btn">
+    <button matButton="filled" class="content-menu-btn" (click)="submit()">
       <mat-icon>check</mat-icon>
       Submit
     </button>
@@ -14,24 +14,24 @@
     <form class="employee-form">
       <mat-form-field class="field-full-width">
         <mat-label>Number plate</mat-label>
-        <input matInput placeholder="Ex: MAZ2833">
+        <input type="text" name="numberPlate" [(ngModel)]="numberPlate" matInput placeholder="Ex: MAZ2833">
       </mat-form-field>
 
       <mat-form-field class="field-full-width">
         <mat-label>VIN</mat-label>
-        <input matInput placeholder="Ex: W2373G3D3SDD33">
+        <input type="text" name="vin" [(ngModel)]="vin" matInput placeholder="Ex: W2373G3D3SDD33">
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
         <mat-label>Manufacturer</mat-label>
-        <input matInput placeholder="Ex. Mercedes-benz">
+        <input type="text" name="manufacturer" [(ngModel)]="manufacturer" matInput placeholder="Ex. Mercedes-benz">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>State</mat-label>
-        <mat-select placeholder="Choose an option">
-          @for (state of states; track state){
-            <mat-option [value]="state">{{state}}</mat-option>
+        <mat-select name="state" placeholder="Choose an option" [(ngModel)]="state">
+          @for (state of states; track state) {
+            <mat-option [value]="state">{{ state }}</mat-option>
           }
         </mat-select>
       </mat-form-field>

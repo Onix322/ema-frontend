@@ -64,5 +64,11 @@
 
 .employee-form{
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
+}
+
+.content-content > div {
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
 }

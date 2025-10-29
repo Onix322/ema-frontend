@@ -1,7 +1,7 @@
 import {Car} from './car.types';
 
 export interface UserData {
-  id: string | null;
+  uuid: string | null;
   name: string;
   car: Car | null;
   workingHours: number;

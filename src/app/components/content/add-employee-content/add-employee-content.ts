@@ -8,7 +8,7 @@ import {MatInput} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {UserData, UserRole} from '../../../types/user.types';
 import {Car} from '../../../types/car.types';
-import {FormsModule} from '@angular/forms';
+import {FormBuilder, FormsModule} from '@angular/forms';
 import {EmployeeService} from '../../../service/employee-service';
 
 @Component({
@@ -30,30 +30,20 @@ import {EmployeeService} from '../../../service/employee-service';
 })
 export class AddEmployeeContent {
 
-  @Input({
-    required: true
-  })
+  @Input()
   protected name!: string;
-  @Input({
-    required: true
-  })
+  @Input()
   protected workingHours!: number;
-  @Input({
-    required: true
-  })
+  @Input()
   protected badge!: number;
-  @Input({
-    required: true
-  })
+  @Input()
   protected car!: Car | null | "none";
-  @Input({
-    required: true
-  })
+  @Input()
   protected role!: UserRole;
 
-  protected roles: Array<string | UserRole>;
+  protected roles: Array<UserRole>;
 
-  constructor(private dc: DisplayContent, private employeeService: EmployeeService) {
+  constructor(private dc: DisplayContent, private employeeService: EmployeeService, private fromBuilder: FormBuilder) {
     this.roles = Object.values(UserRole)
   }
 
@@ -61,12 +51,12 @@ export class AddEmployeeContent {
     return this.dc.displayContent(EmployeeContent, this.dc?.content?.nativeElement)
   }
 
-  protected submit(){
+  protected submit() {
 
     this.car = this.car == "none" ? null : this.car
 
     const body: UserData = {
-      id: null,
+      uuid: null,
       name: this.name,
       car: this.car,
       workingHours: this.workingHours,
@@ -74,12 +64,10 @@ export class AddEmployeeContent {
       role: this.role
     }
 
-    console.log(body)
-
     this.employeeService.create(body).subscribe({
       next: (response) => {
         console.log(response)
-        alert("User " + response.data.id + "(" + response.data.name + ") has been created successfully!")
+        alert("User " + response.data.uuid + "(" + response.data.name + ") has been created successfully!")
       },
       error: (err) => {
         throw new Error(err)
