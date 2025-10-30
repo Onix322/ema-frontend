@@ -92,21 +92,31 @@ export class EmployeeContent implements AfterViewInit {
   protected deleteUser(uuid: string) {
     return this.employeeService.delete(uuid).subscribe({
       next: (response) => {
-        this.dataSource._updateChangeSubscription()
+        this.dataSource.data = this.dataSource.data.filter(x => x.uuid !== uuid);
+        this.dataSource._updateChangeSubscription();
         alert("User deleted");
         console.log(response)
       },
-      error: (err) =>{
+      error: (err) => {
         throw new Error(err)
       }
     })
+  }
+
+  protected goToAdd(){
+    AddEmployeeContent.setUuid(null)
+    this.displayContent(AddEmployeeContent)
+  }
+
+  protected goToEdit(uuid: string) {
+    AddEmployeeContent.setUuid(uuid)
+    this.displayContent(AddEmployeeContent)
   }
 
   private getAll() {
     this.fetchingData.set(true)
     this.employeeService.getAll().subscribe({
       next: (response) => {
-        // this.dataSource.connect().next(response.data)
         this.dataSource = new MatTableDataSource(response.data)
         this.fetchingData.set(false)
       },
@@ -116,8 +126,5 @@ export class EmployeeContent implements AfterViewInit {
         throw new Error(err)
       }
     })
-    // setTimeout(() => {
-    //
-    // }, 1000)
   }
 }

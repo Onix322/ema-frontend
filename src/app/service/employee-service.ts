@@ -28,9 +28,39 @@ export class EmployeeService {
     return this.http.get<ApiResponse<UserData[]>>(endpoint)
   }
 
+  public get(uuid: string): Observable<ApiResponse<UserData>> {
+    const endpoint = this.url + "/get/" + uuid;
+
+    return this.http.get<ApiResponse<UserData>>(endpoint)
+  }
+
   public delete(uuid: string): Observable<ApiResponse<boolean>> {
     const endpoint: string = this.url + "/delete/" + uuid
-    console.log("click")
+
     return this.http.delete<ApiResponse<boolean>>(endpoint)
+  }
+
+  public edit(body: UserData): Observable<ApiResponse<UserData>> {
+    const endpoint: string = this.url + "/update"
+
+    return this.http.put<ApiResponse<UserData>>(endpoint, body)
+  }
+
+  public assignCar(uuid: string, carUuid: string): Observable<ApiResponse<UserData>> {
+    const endpoint: string = this.url + "/assign/" + uuid + "/" + carUuid
+
+    return this.http.patch<ApiResponse<UserData>>(endpoint, null)
+  }
+
+  public unassignCar(uuid: string): Observable<ApiResponse<UserData>> {
+    const endpoint: string = this.url + "/unassign/" + uuid + "/"
+
+    return this.http.patch<ApiResponse<UserData>>(endpoint, null)
+  }
+
+  public autoAssign(uuid: string): Observable<ApiResponse<UserData>> {
+    const endpoint: string = this.url + "/assign/auto/" + uuid
+
+    return this.http.patch<ApiResponse<UserData>>(endpoint, null)
   }
 }
