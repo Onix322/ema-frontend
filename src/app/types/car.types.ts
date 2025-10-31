@@ -1,15 +1,18 @@
+export enum CarState {
+  NONE = 'NONE',
+  MECHANIC = 'MECHANIC',
+  GROUNDED = 'GROUNDED',
+  AVAILABLE = 'AVAILABLE',
+  UNAVAILABLE = 'UNAVAILABLE',
+  ASSIGNED = 'ASSIGNED',
+  STANDBY = 'STANDBY',
+}
+
 export interface Car {
   uuid: string | null,
   numberPlate: string,
   vin: string,
   manufacturer: string,
-  carState: CarState //describes the state of the car e.g.: 'MECHANIC', 'GROUNDED', 'AVAILABLE', 'ASSIGNED'
+  carState: CarState
 }
 
-export enum CarState {
-  MECHANIC = 'MECHANIC',
-  GROUNDED = 'GROUNDED',
-  AVAILABLE = 'AVAILABLE',
-  ASSIGNED = 'ASSIGNED',
-  STANDBY = 'STANDBY',
-}

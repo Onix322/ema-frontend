@@ -28,9 +28,16 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>Assign a car</mat-label>
-          <mat-select name="car" [(ngModel)]="car">
-              <mat-option value="none">None</mat-option>
+          <mat-label>{{ car ? car.numberPlate : "Assign a car"}}</mat-label>
+          <mat-select name="car" [(ngModel)]="car" [value]="car">
+            <mat-option [value]="null">
+              None
+            </mat-option>
+            @for (car of cars; track car){
+              <mat-option [value]="car">
+                {{ car?.numberPlate }}
+              </mat-option>
+            }
           </mat-select>
         </mat-form-field>
 

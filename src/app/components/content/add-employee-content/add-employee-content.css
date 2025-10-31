@@ -1,0 +1,9 @@
+.car-details{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.car-details > .plate {
+  font-weight: bold;
+}
