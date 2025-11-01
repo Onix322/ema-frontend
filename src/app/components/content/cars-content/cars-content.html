@@ -15,36 +15,63 @@
     </div>
   </div>
   <div class="content-content">
-    <table mat-table [dataSource]="dataSource" matSort>
+    <div class="content-wrapper">
+      @if (fetchingData()) {
+        <mat-spinner></mat-spinner>
+      } @else {
+        <table mat-table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="actions" class="id-actions">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="numberPlate" matSort></th>
+            <td mat-cell *matCellDef="let row">
+              <button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="this.openDialog(row)">
+                  <mat-icon>build</mat-icon>
+                  <span>Change state</span>
+                </button>
+                <button mat-menu-item>
+                  <mat-icon>edit</mat-icon>
+                  <span>Edit</span>
+                </button>
+                <button mat-menu-item style="color: #ff7777" (click)="deleteCar(row.uuid)">
+                  <mat-icon style="color: #ff7777">delete</mat-icon>
+                  <span>Delete</span>
+                </button>
+              </mat-menu>
+            </td>
+          </ng-container>
 
-      <ng-container matColumnDef="numberPlate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="numberPlate" matSort> Number plate</th>
-        <td mat-cell *matCellDef="let row"> {{ row.numberPlate }}</td>
-      </ng-container>
+          <ng-container matColumnDef="numberPlate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header="numberPlate" matSort> Number plate</th>
+            <td mat-cell *matCellDef="let row"> {{ row.numberPlate }}</td>
+          </ng-container>
 
-      <ng-container matColumnDef="vin">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header matSort> VIN</th>
-        <td mat-cell *matCellDef="let row"> {{ row.vin }}</td>
-      </ng-container>
+          <ng-container matColumnDef="vin">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header matSort> VIN</th>
+            <td mat-cell *matCellDef="let row"> {{ row.vin }}</td>
+          </ng-container>
 
-      <ng-container matColumnDef="manufacturer">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer</th>
-        <td mat-cell *matCellDef="let row"> {{ row.manufacturer }}</td>
-      </ng-container>
+          <ng-container matColumnDef="manufacturer">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer</th>
+            <td mat-cell *matCellDef="let row"> {{ row.manufacturer }}</td>
+          </ng-container>
 
-      <ng-container matColumnDef="state">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> State</th>
-        <td mat-cell *matCellDef="let row"> {{ row.carState }}</td>
-      </ng-container>
+          <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> State</th>
+            <td mat-cell *matCellDef="let row"> {{ row.carState }}</td>
+          </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
-      <!-- Row shown when there is no matching data. -->
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
-      </tr>
-    </table>
-
+          <!-- Row shown when there is no matching data. -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+      }
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ViewChild} from '@angular/core';
-import {MatButton} from '@angular/material/button';
+import {AfterViewInit, Component, signal, ViewChild} from '@angular/core';
+import {MatButton, MatIconButton} from '@angular/material/button';
 import {
   MatCell,
   MatCellDef,
@@ -18,11 +18,17 @@ import {MatIcon} from '@angular/material/icon';
 import {MatInput} from '@angular/material/input';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {Car, CarState} from '../../../types/car.types';
+import {Car} from '../../../types/car.types';
 import {DisplayContent} from '../../../service/display-content';
 import {AddCarContent} from '../add-car-content/add-car-content';
 import {CarService} from '../../../service/car-service';
 import {ApiResponse} from '../../../types/api-response.types';
+import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
+import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {ChangeStateDialog} from '../../dialogs/change-state-dialog/change-state-dialog';
+import {ChangeStateDialogData} from '../../../types/dialog.types';
+
 
 @Component({
   selector: 'app-cars-content',
@@ -42,20 +48,27 @@ import {ApiResponse} from '../../../types/api-response.types';
     MatHeaderRow,
     MatHeaderRowDef,
     MatRow,
-    MatRowDef
+    MatRowDef,
+    MatIconButton,
+    MatMenu,
+    MatMenuItem,
+    MatMenuTrigger,
+    MatProgressSpinner
   ],
   templateUrl: './cars-content.html',
   styleUrls: ['./cars-content.css', '../content.css']
 })
 export class CarsContent implements AfterViewInit {
 
-  displayedColumns: string[] = ['numberPlate', 'vin', 'manufacturer', 'state'];
+  displayedColumns: string[] = ['actions', 'numberPlate', 'vin', 'manufacturer', 'state'];
   dataSource: MatTableDataSource<Car>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dc: DisplayContent, private carService: CarService) {
+  protected fetchingData = signal(false)
+
+  constructor(private dc: DisplayContent, private carService: CarService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource()
   }
 
@@ -65,11 +78,22 @@ export class CarsContent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  protected displayContent(){
+  protected openDialog(car: Car){
+    const body: ChangeStateDialogData = {
+      car: car
+    }
+    const dialogRef = this.dialog.open(ChangeStateDialog, {
+      data: body
+    })
+
+    this.updateDataSourceAfterDialogClosed(dialogRef)
+  }
+
+  protected displayContent() {
     return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
   }
 
-  applyFilter(event: Event) {
+  protected applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
@@ -78,17 +102,53 @@ export class CarsContent implements AfterViewInit {
     }
   }
 
-  private getAll(){
-    //get them
-    this.carService.getAll()
+  protected deleteCar(uuid: string) {
+    this.carService.delete(uuid)
       .subscribe({
-        next: (response: ApiResponse<Car[]>) => {
-          this.dataSource = new MatTableDataSource(response.data);
+        next: response => {
+          alert("Car has been deleted!")
+          this.dataSource.data = this.dataSource.data.filter(c => c.uuid !== uuid)
         },
         error: (err) => {
-          throw new Error(err)
+          throw new Error(err.message)
         }
       })
+  }
+
+  private getAll() {
+    this.fetchingData.set(true)
+    setTimeout(() => {
+      this.carService.getAll()
+        .subscribe({
+          next: (response: ApiResponse<Car[]>) => {
+            this.dataSource.data = [...response.data];
+            this.fetchingData.set(false)
+          },
+          error: (err) => {
+            this.fetchingData.set(false)
+            throw new Error(err)
+          }
+        })
+    }, 500)
+  }
+  private updateDataSourceAfterDialogClosed(dialogRef: MatDialogRef<ChangeStateDialog>) {
+    dialogRef.afterClosed().subscribe({
+      next: (response: ApiResponse<Car>) => {
+        if(response.data == null) {
+          return
+        }
+        this.updateDataSource(response.data.uuid, response.data)
+      }
+    })
+  }
+
+  private updateDataSource(uuid: string | null, newCar: Car) {
+    if (!uuid) {
+      throw new Error("Uuid is mandatory")
+    }
+    const index = this.dataSource.data.findIndex(e => e.uuid === uuid);
+    this.dataSource.data[index] = newCar;
+    this.dataSource.data = [...this.dataSource.data];
   }
 }
 

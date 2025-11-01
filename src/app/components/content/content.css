@@ -67,8 +67,12 @@
   flex-direction: column;
 }
 
-.content-content > div {
+.content-content > .content-wrapper {
   width: 100% !important;
   display: flex;
   justify-content: center;
+}
+.id-actions{
+  width: fit-content !important;
+  max-width: 40px;
 }

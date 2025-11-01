@@ -44,9 +44,9 @@ export class CarService {
     return this.http.put<ApiResponse<Car>>(endpoint, car)
   }
 
-  public delete(uuid: string) {
+  public delete(uuid: string): Observable<ApiResponse<Boolean>> {
     const endpoint: string = this.url + "/delete/" + uuid
 
-    return this.http.delete(endpoint)
+    return this.http.delete<ApiResponse<Boolean>>(endpoint)
   }
 }

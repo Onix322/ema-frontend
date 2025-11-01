@@ -13,16 +13,16 @@ import {MatInputModule} from '@angular/material/input';
 import {FormsModule} from '@angular/forms';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatIcon} from '@angular/material/icon';
-import {AssignCarDialogData} from '../../service/dialog.types';
-import {UserData} from '../../types/user.types';
-import {Car} from '../../types/car.types';
-import {EmployeeService} from '../../service/employee-service';
-import {ApiResponse} from '../../types/api-response.types';
+import {AssignCarDialogData} from '../../../types/dialog.types';
+import {UserData} from '../../../types/user.types';
+import {Car} from '../../../types/car.types';
+import {EmployeeService} from '../../../service/employee-service';
+import {ApiResponse} from '../../../types/api-response.types';
 
 @Component({
   selector: 'app-assign-dialog',
   templateUrl: './assign-dialog.html',
-  styleUrl: './assign-dialog.css',
+  styleUrls: ['./assign-dialog.css', '../dialogs.css'],
   imports: [MatFormFieldModule, MatInputModule, FormsModule, MatButtonModule, MatDialogActions, MatDialogContent, MatDialogTitle, MatDialogClose, MatSelect, MatIcon, MatOption],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

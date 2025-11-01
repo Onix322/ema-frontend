@@ -24,11 +24,11 @@ import {AddEmployeeContent} from '../add-employee-content/add-employee-content';
 import {EmployeeService} from '../../../service/employee-service';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {AssignDialog} from '../../assign-dialog/assign-dialog';
+import {AssignDialog} from '../../dialogs/assign-dialog/assign-dialog';
 import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {map, switchMap} from 'rxjs';
 import {CarService} from '../../../service/car-service';
-import {AssignCarDialogData} from '../../../service/dialog.types';
+import {AssignCarDialogData} from '../../../types/dialog.types';
 import {ApiResponse} from '../../../types/api-response.types';
 
 

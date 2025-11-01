@@ -11,7 +11,7 @@
   width: fit-content;
 }
 
-.employee-details{
+.entity-details{
   display: flex;
   flex-direction: column;
   align-items: start;

@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Change car state:</h2>
+<mat-dialog-content class="dialog-content">
+  <div class="entity-details">
+    <h4>{{car?.numberPlate}}</h4>
+    <p>{{car?.carState}}</p>
+  </div>
+  <mat-icon class="arrow">arrow_right</mat-icon>
+  <mat-form-field subscriptSizing="dynamic">
+    <mat-label>Choose state</mat-label>
+    <mat-select>
+      @for(state of states; track state){
+        <mat-option [value]="state"> {{state[0].toUpperCase() + state.substring(1).toLowerCase() }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>No Thanks</button>
+  <button matButton (click)="submit()">Change now</button>
+</mat-dialog-actions>
