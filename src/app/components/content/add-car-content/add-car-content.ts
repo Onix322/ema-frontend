@@ -29,8 +29,7 @@ export class AddCarContent {
 
   protected states: Array<CarState>;
 
-  @Input()
-  protected uuid!: string;
+  protected static uuid: string | null = null;
   @Input()
   protected numberPlate!: string;
   @Input()
@@ -42,15 +41,52 @@ export class AddCarContent {
 
   constructor(private dc: DisplayContent, private carService: CarService) {
     this.states = Object.values(CarState)
+    this.initMode(AddCarContent.uuid)
+  }
+
+  public static setUuid(uuid: string | null){
+    AddCarContent.uuid = uuid
   }
 
   protected goBackAction() {
     return this.dc.displayContent(CarsContent, this.dc?.content?.nativeElement)
   }
 
-  protected submit() {
+  private initMode(uuid: string | null){
+    if(uuid && uuid.trim() != ""){
+      this.carService.get(uuid)
+        .subscribe({
+          next: (response) => {
+            this.numberPlate = response.data.numberPlate
+            this.vin = response.data.vin
+            this.manufacturer = response.data.manufacturer
+            this.state = response.data.carState
+          }
+        })
+    }
+  }
+  private edit(uuid: string){
+    console.log("edit")
+    const body: Car = {
+      uuid: uuid,
+      vin: this.vin,
+      manufacturer: this.manufacturer,
+      carState: this.state,
+      numberPlate: this.numberPlate
+    }
+    this.carService.update(body)
+      .subscribe({
+        next: (response) => {
+          alert("Car " + response.data.numberPlate + " has been updated!")
+        },
+        error: (err) => {
+          throw new Error(err.message)
+        }
+      })
+  }
 
-    console.log("clicked")
+  private add(){
+    console.log("add")
     const body: Car = {
       uuid: null,
       manufacturer: this.manufacturer,
@@ -69,5 +105,11 @@ export class AddCarContent {
           throw new Error(err)
         }
       })
+  }
+
+  protected submit() {
+    if(AddCarContent.uuid && AddCarContent.uuid?.trim() != "") {
+      this.edit(AddCarContent.uuid)
+    } else this.add()
   }
 }

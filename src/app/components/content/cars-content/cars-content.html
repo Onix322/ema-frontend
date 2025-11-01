@@ -1,6 +1,6 @@
 <div id="content-container" class="container">
   <div class="content-menu">
-    <button matButton="filled" class="content-menu-btn" (click)="displayContent()">
+    <button matButton="filled" class="content-menu-btn" (click)="goToAdd()">
       <mat-icon>add</mat-icon>
       Add
     </button>
@@ -31,7 +31,7 @@
                   <mat-icon>build</mat-icon>
                   <span>Change state</span>
                 </button>
-                <button mat-menu-item>
+                <button mat-menu-item (click)="this.goToEdit(row.uuid)">
                   <mat-icon>edit</mat-icon>
                   <span>Edit</span>
                 </button>

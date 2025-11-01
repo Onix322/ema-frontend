@@ -38,6 +38,12 @@ export class CarService {
     return this.http.get<ApiResponse<Car>>(endpoint)
   }
 
+  public update(car: Car): Observable<ApiResponse<Car>> {
+    const endpoint: string = this.url + "/update"
+
+    return this.http.put<ApiResponse<Car>>(endpoint, car)
+  }
+
   public changeState(car: Car): Observable<ApiResponse<Car>> {
     const endpoint: string = this.url + "/state"
 

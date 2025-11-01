@@ -89,7 +89,13 @@ export class CarsContent implements AfterViewInit {
     this.updateDataSourceAfterDialogClosed(dialogRef)
   }
 
-  protected displayContent() {
+  protected goToAdd(){
+    AddCarContent.setUuid(null)
+    return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
+  }
+
+  protected goToEdit(uuid: string){
+    AddCarContent.setUuid(uuid)
     return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
   }
 
