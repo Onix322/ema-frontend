@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Car, CarState} from '../types/car.types';
+import {Car} from '../types/car.types';
 import {Observable} from 'rxjs';
 import {ApiResponse} from '../types/api-response.types';
 
@@ -14,7 +14,7 @@ export class CarService {
   constructor(private http: HttpClient) {
   }
 
-  public create(body: Car): Observable<ApiResponse<Car>>{
+  public create(body: Car): Observable<ApiResponse<Car>> {
     const endpoint = this.url + "/create"
 
     return this.http.post<ApiResponse<Car>>(endpoint, body)
@@ -22,6 +22,12 @@ export class CarService {
 
   public getAll(): Observable<ApiResponse<Car[]>> {
     const endpoint: string = this.url + "/get"
+
+    return this.http.get<ApiResponse<Car[]>>(endpoint)
+  }
+
+  public getAllAvailable(): Observable<ApiResponse<Car[]>> {
+    const endpoint: string = this.url + "/get/available"
 
     return this.http.get<ApiResponse<Car[]>>(endpoint)
   }

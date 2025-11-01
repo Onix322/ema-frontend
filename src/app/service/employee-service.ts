@@ -53,7 +53,7 @@ export class EmployeeService {
   }
 
   public unassignCar(uuid: string): Observable<ApiResponse<UserData>> {
-    const endpoint: string = this.url + "/unassign/" + uuid + "/"
+    const endpoint: string = this.url + "/unassign/" + uuid
 
     return this.http.patch<ApiResponse<UserData>>(endpoint, null)
   }

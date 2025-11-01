@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Assign an available car to:</h2>
+<mat-dialog-content class="dialog-content">
+  <div class="employee-details">
+    <h4>{{ employee?.name }}</h4>
+    <p>{{ employee?.car?.numberPlate ?? "No car assigned yet" }}</p>
+  </div>
+  <mat-icon class="arrow">arrow_left</mat-icon>
+  @if (employee?.car) {
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Car already assigned</mat-label>
+      <mat-select disabled="true">
+        <mat-option> Car already assigned</mat-option>
+      </mat-select>
+    </mat-form-field>
+  } @else if (cars.length < 1) {
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>No available cars</mat-label>
+      <mat-select disabled="true">
+        <mat-option> No available cars found</mat-option>
+      </mat-select>
+    </mat-form-field>
+  } @else {
+    <mat-form-field subscriptSizing="dynamic">
+      <mat-label>Choose a car</mat-label>
+      <mat-select [value]="employee?.car" [(ngModel)]="carSelected" [disabled]="false">
+        @for (car of cars; track car) {
+          <mat-option [value]="car.uuid">{{ car.numberPlate }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  }
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>No Thanks</button>
+  <button matButton (click)="assignCar()" [disabled]="carSelected == null || employee?.car">Assign now</button>
+</mat-dialog-actions>

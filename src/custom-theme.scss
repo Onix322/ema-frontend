@@ -7,6 +7,10 @@
 
 :root {
 
+  @include mat.dialog-overrides((
+    container-shape: 10px,
+  ));
+
   @include mat.fab-overrides((
     container-elevation-shadow: -4px -4px 5px 0px rgba(0, 0, 0, 0.5),
   ));
@@ -15,11 +19,8 @@
     filled-container-color: white,
     filled-label-text-color: balck,
     filled-container-shape: 8px,
-
     // color layer (hover, focus, pressed)
     filled-state-layer-color: #edf5ff,
-
-
     // opacity (hover/focus/pressed)
     filled-hover-state-layer-opacity: 1,
     filled-focus-state-layer-opacity: 1,
@@ -65,15 +66,15 @@ body {
   margin: 0;
 }
 
-.mat-expansion-panel-body{
+.mat-expansion-panel-body {
   padding: 0 !important;
 }
 
-.action-logout:hover > .mat-ripple.mat-mdc-button-ripple{
+.action-logout:hover > .mat-ripple.mat-mdc-button-ripple {
   background-color: #ffb7b7 !important;
 }
 
-.mat-expansion-panel-header{
+.mat-expansion-panel-header {
   font-size: 16px !important;
   justify-items: start;
   padding-left: 15px !important;
@@ -84,13 +85,13 @@ body {
   background-color: #edf5ff !important;
 }
 
-mat-icon{
+mat-icon {
   font-size: 20px !important;
   align-content: center;
   width: fit-content;
 }
 
-mat-paginator{
+mat-paginator {
   justify-self: center;
   background: white !important;
 }

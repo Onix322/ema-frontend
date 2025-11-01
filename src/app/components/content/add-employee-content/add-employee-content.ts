@@ -79,7 +79,7 @@ export class AddEmployeeContent {
   }
 
   protected getCars() {
-    this.carService.getAll()
+    this.carService.getAllAvailable()
       .subscribe({
         next: (response) => {
           this.cars = response.data
