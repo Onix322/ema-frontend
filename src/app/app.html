@@ -1,14 +1,14 @@
-<section>
-  <mat-grid-list id="interface-container" [cols]="5" [rowHeight]="defaultRowHeight">
-    <mat-grid-tile id="interface-header" colspan="5" [rowspan]="layoutSettings.headerH"  >
+<section id="container">
+  <div id="interface-container" >
+    <div id="interface-header"  >
       <div id="header-container" class="container">
         <div class="header-title">
           <img src="https://klar-delivery.de/wp-content/uploads/2022/02/Logo-freigestellt-1-e1645354146250.png">
           <h2>EMS - Employee Management System</h2>
         </div>
       </div>
-    </mat-grid-tile>
-    <mat-grid-tile id="interface-menu" colspan="1" [rowspan]="layoutSettings.menuH">
+    </div>
+    <div id="interface-menu" >
       <div id="menu-container" class="container">
         <div id="user-container" >
           <img src="user-img">
@@ -48,11 +48,11 @@
           </button>
         </div>
       </div>
-    </mat-grid-tile>
-    <mat-grid-tile #content id="interface-content" colspan="4" [rowspan]="layoutSettings.contentH">
+    </div>
+    <div #content id="interface-content" >
 
-    </mat-grid-tile>
-  </mat-grid-list>
+    </div>
+  </div>
 
   <div class="notification">
     <h3>Notification</h3>

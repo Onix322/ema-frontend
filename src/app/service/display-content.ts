@@ -19,7 +19,7 @@ export class DisplayContent {
     const contentHTML = <ElementRef<HTMLElement>>content.location
     if (appendTo) {
       for (let child of appendTo.children) {
-        appendTo.replaceChildren(child)
+        appendTo.removeChild(child)
       }
       appendTo.appendChild(contentHTML.nativeElement)
     }

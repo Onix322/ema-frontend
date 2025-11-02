@@ -12,22 +12,22 @@
   </div>
   <div class="content-content">
     <form class="employee-form">
-      <mat-form-field class="field-full-width">
+      <mat-form-field appearance="outline" >
         <mat-label>Name</mat-label>
         <input matInput type="text" name="name" [(ngModel)]="name">
       </mat-form-field>
 
-      <mat-form-field class="field-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Working hours / Week</mat-label>
         <input matInput placeholder="Ex: 48" type="number" name="workingHours" [(ngModel)]="workingHours">
       </mat-form-field>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Barge Number</mat-label>
         <input matInput placeholder="Ex. 2038298398283" name="badge" [(ngModel)]="badge">
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>{{ car ? car.numberPlate : "Assign available car" }}</mat-label>
         <mat-select name="car" [(ngModel)]="car" [value]="car">
           @if (cars.length > 0) {
@@ -48,7 +48,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>Select a role</mat-label>
         <mat-select name="role" [(ngModel)]="role">
           @for (role of roles; track role) {

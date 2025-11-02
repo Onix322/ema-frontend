@@ -2,65 +2,21 @@
 /*CONTENT*/
 
 #content-container{
-  padding: 20px;
-  height: calc(100% - 50px);
+  padding: 10px;
   display: flex;
   flex-direction: column;
   gap: 20px;
+  height: 100%;
 }
 
 .content-menu{
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  max-height: 50px;
+  max-height: 100px;
   align-items: center;
-  height: 100%;
 }
 
-.content-menu-btn{
-  background: #e4f6ff !important;
-}
 
-.filter{
-  --padding-margins: 10px;
-  padding: 0;
-  margin: 0;
-  height: 100%;
-  position: relative;
-}
-
-.filter input{
-  height: 100%;
-  padding: 0 var(--padding-margins);
-  margin: 0;
-  border: 0;
-  background: #edf5ff;
-  border-radius: 10px;
-}
-
-.filter input::placeholder{
-  opacity: 0;
-}
-
-.filter:focus-within input::placeholder{
-  opacity: 1;
-}
-
-.filter label{
-  text-align: center;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0 var(--padding-margins);
-  pointer-events: none;
-}
-
-.filter:focus-within label{
-  opacity: 0;
-}
 
 .employee-form{
   display: flex;

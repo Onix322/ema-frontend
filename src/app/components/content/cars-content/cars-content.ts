@@ -15,8 +15,8 @@ import {
   MatTableDataSource
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
-import {MatInput} from '@angular/material/input';
-import {MatPaginator} from '@angular/material/paginator';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatPaginator, MatPaginatorSelectConfig} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Car} from '../../../types/car.types';
 import {DisplayContent} from '../../../service/display-content';
@@ -28,7 +28,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ChangeStateDialog} from '../../dialogs/change-state-dialog/change-state-dialog';
 import {ChangeStateDialogData} from '../../../types/dialog.types';
-
+import {ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-cars-content',
@@ -53,7 +53,10 @@ import {ChangeStateDialogData} from '../../../types/dialog.types';
     MatMenu,
     MatMenuItem,
     MatMenuTrigger,
-    MatProgressSpinner
+    MatProgressSpinner,
+    MatFormField,
+    MatLabel,
+    ReactiveFormsModule
   ],
   templateUrl: './cars-content.html',
   styleUrls: ['./cars-content.css', '../content.css']

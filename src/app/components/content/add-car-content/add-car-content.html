@@ -12,22 +12,22 @@
   </div>
   <div class="content-content">
     <form class="employee-form">
-      <mat-form-field class="field-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Number plate</mat-label>
         <input type="text" name="numberPlate" [(ngModel)]="numberPlate" matInput placeholder="Ex: MAZ2833">
       </mat-form-field>
 
-      <mat-form-field class="field-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>VIN</mat-label>
         <input type="text" name="vin" [(ngModel)]="vin" matInput placeholder="Ex: W2373G3D3SDD33">
       </mat-form-field>
 
-      <mat-form-field class="example-full-width">
+      <mat-form-field appearance="outline">
         <mat-label>Manufacturer</mat-label>
         <input type="text" name="manufacturer" [(ngModel)]="manufacturer" matInput placeholder="Ex. Mercedes-benz">
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field appearance="outline">
         <mat-label>State</mat-label>
         <mat-select name="state" placeholder="Choose an option" [(ngModel)]="state">
           @for (state of states; track state) {

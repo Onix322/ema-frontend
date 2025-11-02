@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, signal, Type, ViewChild, ViewContainerRef} from '@angular/core';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {EmployeeContent} from './components/content/employee-content/employee-content';
@@ -28,7 +27,7 @@ type LayoutSetting = {
 
 @Component({
   selector: 'app-root',
-  imports: [MatGridList, MatGridTile, MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
+  imports: [MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })

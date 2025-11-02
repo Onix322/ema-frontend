@@ -5,6 +5,11 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 
+
+$color-buttons: mat.m2-get-color-from-palette(mat.$azure-palette, 90);
+$color-buttons-hover: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
+$form-fields: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
+
 :root {
 
   @include mat.dialog-overrides((
@@ -16,11 +21,11 @@
   ));
 
   @include mat.button-overrides((
-    filled-container-color: white,
+    filled-container-color: $color-buttons,
     filled-label-text-color: balck,
     filled-container-shape: 8px,
     // color layer (hover, focus, pressed)
-    filled-state-layer-color: #edf5ff,
+    filled-state-layer-color: $color-buttons-hover,
     // opacity (hover/focus/pressed)
     filled-hover-state-layer-opacity: 1,
     filled-focus-state-layer-opacity: 1,
@@ -31,8 +36,19 @@
     actions-divider-color: white,
     container-background-color: white,
     container-shape: 0,
-    header-hover-state-layer-color: #edf5ff,
+    header-hover-state-layer-color: $color-buttons,
     header-text-size: 16px
+  ));
+
+  @include mat.table-overrides((
+    background-color: white,
+    header-headline-color: #1d1d1f,
+  ));
+
+  @include mat.form-field-overrides((
+    filled-container-shape: 8px,
+    outlined-container-shape: 8px,
+    filled-container-color: $form-fields,
   ));
 }
 
@@ -68,6 +84,8 @@ body {
 
 .mat-expansion-panel-body {
   padding: 0 !important;
+  display: flex;
+  flex-direction: column;
 }
 
 .action-logout:hover > .mat-ripple.mat-mdc-button-ripple {
@@ -82,10 +100,10 @@ body {
 
 .mat-expansion-panel-header.mat-focused,
 .mat-expansion-panel-header.mat-expanded {
-  background-color: #edf5ff !important;
+  background-color: $color-buttons !important;
 }
 
-mat-icon {
+.mat-icon {
   font-size: 20px !important;
   align-content: center;
   width: fit-content;
@@ -95,3 +113,31 @@ mat-paginator {
   justify-self: center;
   background: white !important;
 }
+
+#actions-container .mdc-button {
+  background-color: white;
+  height: 50px;
+  font-size: 16px;
+  justify-content: flex-start !important;
+  border-radius: 0;
+}
+
+#actions-container .mdc-button:hover {
+  background-color: $color-buttons;
+}
+
+.mdc-button.action-logout {
+  color: #ff0000 !important;
+}
+
+.mat-mdc-table, cdk-table {
+  overflow: hidden;
+  border-radius: 10px !important;
+}
+
+mat-label{
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+

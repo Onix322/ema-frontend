@@ -17,7 +17,7 @@ import {
 } from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {MatInput} from '@angular/material/input';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {UserData} from '../../../types/user.types';
 import {DisplayContent} from '../../../service/display-content';
 import {AddEmployeeContent} from '../add-employee-content/add-employee-content';
@@ -56,7 +56,9 @@ import {ApiResponse} from '../../../types/api-response.types';
     MatMenuItem,
     MatIconButton,
     MatProgressSpinner,
-    MatDialogModule
+    MatDialogModule,
+    MatFormField,
+    MatLabel
   ],
   templateUrl: './employee-content.html',
   styleUrls: ['./employee-content.css', '../content.css']
