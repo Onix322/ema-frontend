@@ -6,6 +6,7 @@ import {QuickActions} from './components/content/quick-actions/quick-actions';
 import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
 import {CarsContent} from './components/content/cars-content/cars-content';
 import {DisplayContent} from './service/display-content';
+import {Notification} from './components/notification/notification';
 
 //measured in px
 type WindowDimensions = {
@@ -27,7 +28,7 @@ type LayoutSetting = {
 
 @Component({
   selector: 'app-root',
-  imports: [MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
+  imports: [MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, Notification],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
