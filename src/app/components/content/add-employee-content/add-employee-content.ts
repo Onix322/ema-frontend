@@ -109,7 +109,8 @@ export class AddEmployeeContent {
     console.log("add")
     this.employeeService.create(body).subscribe({
       next: (response) => {
-        alert("User (" + response.data.name + ") has been created successfully!")
+        // alert("User (" + response.data.name + ") has been created successfully!")
+
       }, error: (err) => {
         throw new Error(err.message)
       }

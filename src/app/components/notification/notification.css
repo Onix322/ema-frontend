@@ -8,6 +8,6 @@
   background: white;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 0 10px -5px rgb(80, 80, 80);
+  box-shadow: 0 0 5px 0 rgba(80, 80, 80, 0.9);
 }
 
