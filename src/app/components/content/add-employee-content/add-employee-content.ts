@@ -11,6 +11,8 @@ import {Car} from '../../../types/car.types';
 import {FormsModule} from '@angular/forms';
 import {EmployeeService} from '../../../service/employee-service';
 import {CarService} from '../../../service/car-service';
+import {NotificationService} from '../../../service/notification-service';
+import {NotificationImportance} from '../../notification/notification';
 
 @Component({
   selector: 'app-add-employee-content',
@@ -45,7 +47,7 @@ export class AddEmployeeContent {
   protected roles: Array<UserRole>;
   protected cars: Array<Car>;
 
-  constructor(private dc: DisplayContent, private employeeService: EmployeeService, private carService: CarService) {
+  constructor(private dc: DisplayContent, private employeeService: EmployeeService, private carService: CarService, private notificationService: NotificationService) {
     this.roles = Object.values(UserRole)
     this.cars = []
     this.getCars()
@@ -110,8 +112,18 @@ export class AddEmployeeContent {
     this.employeeService.create(body).subscribe({
       next: (response) => {
         // alert("User (" + response.data.name + ") has been created successfully!")
-
+        this.notificationService.notify({
+          title: `${response.data.name} has been registered!`,
+          message: `${response.data.name} has been registered as an employee.`,
+          importance: NotificationImportance.ACCEPTED
+        })
       }, error: (err) => {
+
+        this.notificationService.notify({
+          title: `User not created`,
+          message: `${err.message}`,
+          importance: NotificationImportance.ERROR
+        })
         throw new Error(err.message)
       }
     })

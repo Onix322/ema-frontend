@@ -1,26 +1,31 @@
-import {Component, Output} from '@angular/core';
+import {Component, ElementRef, Output, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'app-notification',
   imports: [],
   templateUrl: './notification.html',
-  styleUrl: './notification.css'
+  styleUrl: './notification.css',
+  providers: [],
 })
 export class Notification {
-
   @Output()
-  protected title: string = "";
+  protected title: string | undefined;
   @Output()
-  protected message: string = "";
+  protected message: string | undefined;
   @Output()
-  protected importance: NotificationImportance = NotificationImportance.NORMAL
+  protected importance: NotificationImportance | undefined;
   protected readonly NotificationImportance = NotificationImportance;
+  @ViewChild('notification')
+  protected notificationRef!: ElementRef<HTMLElement>;
 
+  constructor() {
+  }
 
-  //create notification service witch will take an element where to append the notification, and data
+  public create(data?: { title: string, message: string, importance: NotificationImportance }) {
+    this.title = data?.title
+    this.message = data?.message
+    this.importance = data?.importance
 
-  public notify(data: { title: "", message: "", importance: NotificationImportance.NORMAL }) {
-     //! CREATE notify logic))
   }
 }
 

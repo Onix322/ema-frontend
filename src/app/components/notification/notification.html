@@ -1,20 +1,14 @@
-<div class="notification">
-  @if (NotificationImportance.NORMAL) {
+<div class="notification" #notification>
+  @if (importance == NotificationImportance.NORMAL) {
     <h3>{{ title }}</h3>
-  } @else if (NotificationImportance.ERROR) {
+  } @else if (importance == NotificationImportance.ERROR) {
     <h3 style="color: red">{{ title }}</h3>
-  } @else if (NotificationImportance.WARNING) {
+  } @else if (importance == NotificationImportance.WARNING) {
     <h3 style="color: orange">{{ title }}</h3>
-  } @else if (NotificationImportance.IMPORTANT) {
+  } @else if (importance == NotificationImportance.IMPORTANT) {
     <h3 style="color: blue">{{ title }}</h3>
-  } @else if (NotificationImportance.ACCEPTED) {
-    <h3 style="color: green">{{ title }}</h3>
+  } @else if (importance == NotificationImportance.ACCEPTED) {
+    <h3 style="color: green !important">{{ title }}</h3>
   }
-
-  <h3>{{ message }}</h3>
-  <ng-container>
-    <ng-content>
-
-    </ng-content>
-  </ng-container>
+  <p>{{ message }}</p>
 </div>

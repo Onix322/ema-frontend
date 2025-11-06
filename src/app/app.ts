@@ -7,6 +7,7 @@ import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from
 import {CarsContent} from './components/content/cars-content/cars-content';
 import {DisplayContent} from './service/display-content';
 import {Notification} from './components/notification/notification';
+import {NotificationService} from './service/notification-service';
 
 //measured in px
 type WindowDimensions = {
@@ -28,7 +29,7 @@ type LayoutSetting = {
 
 @Component({
   selector: 'app-root',
-  imports: [MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, Notification],
+  imports: [MatButton, MatIcon, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
@@ -64,10 +65,11 @@ export class App implements AfterViewInit {
   protected readonly QuickActions = QuickActions;
   private currentContent: Type<any> | null = null
 
-  constructor(private dc: DisplayContent, private vcr: ViewContainerRef) {
+  constructor(private notificationService: NotificationService, private dc: DisplayContent, private vcr: ViewContainerRef) {
     this.windowDimensions = this.collectDimensions()
     this.layoutSettings = this.initLayout()
     this.dc.vcr = this.vcr
+    this.notificationService.setHost(this.vcr)
   }
 
   ngAfterViewInit() {
