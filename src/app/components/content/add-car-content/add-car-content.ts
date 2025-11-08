@@ -9,6 +9,8 @@ import {CarsContent} from '../cars-content/cars-content';
 import {Car, CarState} from '../../../types/car.types';
 import {FormsModule} from '@angular/forms';
 import {CarService} from '../../../service/car-service';
+import {NotificationService} from '../../../service/notification-service';
+import {NotificationImportance} from '../../notification/notification';
 
 @Component({
   selector: 'app-add-car-content',
@@ -39,7 +41,7 @@ export class AddCarContent {
   @Input()
   protected state!: CarState;
 
-  constructor(private dc: DisplayContent, private carService: CarService) {
+  constructor(private notificationService: NotificationService, private dc: DisplayContent, private carService: CarService) {
     this.states = Object.values(CarState)
     this.initMode(AddCarContent.uuid)
   }
@@ -65,6 +67,7 @@ export class AddCarContent {
         })
     }
   }
+
   private edit(uuid: string){
     console.log("edit")
     const body: Car = {
@@ -77,9 +80,18 @@ export class AddCarContent {
     this.carService.update(body)
       .subscribe({
         next: (response) => {
-          alert("Car " + response.data.numberPlate + " has been updated!")
+          this.notificationService.notify({
+            title: `${response.data.numberPlate} has been modified`,
+            message: `Successfully modified car's data!`,
+            importance: NotificationImportance.ACCEPTED
+          })
         },
         error: (err) => {
+          this.notificationService.notify({
+            title: `Cannot update data!`,
+            message: `${err.message}`,
+            importance: NotificationImportance.ERROR
+          })
           throw new Error(err.message)
         }
       })
@@ -99,9 +111,19 @@ export class AddCarContent {
     this.carService.create(body)
       .subscribe({
         next: (response) => {
-          alert("Car with id: " + response.data.uuid + " has been created!")
+          this.notificationService.notify({
+            title: "New car has been added!",
+            message: `${response.data.numberPlate} has been created and assigned as ${response.data.carState}`,
+            importance: NotificationImportance.IMPORTANT
+          })
         },
         error: (err) => {
+
+          this.notificationService.notify({
+            title: "Cannot add the car!",
+            message: `${err.message}`,
+            importance: NotificationImportance.ERROR
+          })
           throw new Error(err)
         }
       })

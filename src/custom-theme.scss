@@ -6,10 +6,13 @@
 @use '@angular/material' as mat;
 
 
-$color-buttons: mat.m2-get-color-from-palette(mat.$azure-palette, 90);
+//$color-buttons: mat.m2-get-color-from-palette(mat.$azure-palette, 90);
+//$color-buttons-hover: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
+//$form-fields: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
+
+$color-buttons: rgba(222, 79, 36, 0.28);
 $color-buttons-hover: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
 $form-fields: mat.m2-get-color-from-palette(mat.$azure-palette, 80, 10%);
-
 :root {
 
   @include mat.dialog-overrides((

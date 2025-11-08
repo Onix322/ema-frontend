@@ -18,6 +18,8 @@ import {UserData} from '../../../types/user.types';
 import {Car} from '../../../types/car.types';
 import {EmployeeService} from '../../../service/employee-service';
 import {ApiResponse} from '../../../types/api-response.types';
+import {NotificationService} from '../../../service/notification-service';
+import {NotificationImportance} from '../../notification/notification';
 
 @Component({
   selector: 'app-assign-dialog',
@@ -48,7 +50,6 @@ export class AssignDialog {
     this.employeeService.assignCar(this.employee.uuid, this.matSelect.value)
       .subscribe({
         next: (response) => {
-          alert("Car " + response.data.car?.numberPlate + " has been assign to " + response.data.name)
           this.data.employee = response.data
           this.dialog.close(response)
         },

@@ -30,6 +30,8 @@ import {map, switchMap} from 'rxjs';
 import {CarService} from '../../../service/car-service';
 import {AssignCarDialogData} from '../../../types/dialog.types';
 import {ApiResponse} from '../../../types/api-response.types';
+import {NotificationService} from '../../../service/notification-service';
+import {NotificationImportance} from '../../notification/notification';
 
 
 @Component({
@@ -74,7 +76,7 @@ export class EmployeeContent implements AfterViewInit {
   protected readonly AddEmployeeContent = AddEmployeeContent;
   protected fetchingData = signal(false)
 
-  constructor(private dc: DisplayContent, private employeeService: EmployeeService, private dialog: MatDialog, private carService: CarService) {
+  constructor(private notificationService: NotificationService, private dc: DisplayContent, private employeeService: EmployeeService, private dialog: MatDialog, private carService: CarService) {
     this.dataSource = new MatTableDataSource();
   }
 
@@ -103,10 +105,18 @@ export class EmployeeContent implements AfterViewInit {
       next: (response) => {
         this.dataSource.data = this.dataSource.data.filter(x => x.uuid !== uuid);
         this.dataSource._updateChangeSubscription();
-        alert("User deleted");
-        console.log(response)
+        this.notificationService.notify({
+          title: 'User deleted',
+          message: "User has been deleted!",
+          importance: NotificationImportance.ACCEPTED
+        })
       },
       error: (err) => {
+        this.notificationService.notify({
+          title: 'User user cannot be deleted',
+          message: `${err.message}`,
+          importance: NotificationImportance.ERROR
+        })
         throw new Error(err)
       }
     })
@@ -155,7 +165,11 @@ export class EmployeeContent implements AfterViewInit {
     this.employeeService.unassignCar(uuid)
       .subscribe({
         next: (response) => {
-          alert("Car has been unassigned!")
+          this.notificationService.notify({
+            title: "Unassignment",
+            message: `Car ${response.data.car?.numberPlate} to employee ${response.data.name}`,
+            importance: NotificationImportance.ACCEPTED
+          })
           this.updateUser(response.data.uuid, response.data)
         },
         error: (err) => {
@@ -187,7 +201,18 @@ export class EmployeeContent implements AfterViewInit {
         next: (response: ApiResponse<any>) => {
           if (response.data != null) {
             this.updateUser(response.data.uuid, response.data)
+            this.notificationService.notify({
+              title: `Car ${response.data.car?.numberPlate} has been assigned!`,
+              message: `${response.data.name} now has ${response.data.car?.numberPlate} assigned.`,
+              importance: NotificationImportance.ERROR
+            })
           }
+
+          this.notificationService.notify({
+            title: `Car ${response.data.car?.numberPlate} has been assigned!`,
+            message: `${response.data.name} now has ${response.data.car?.numberPlate} assigned.`,
+            importance: NotificationImportance.IMPORTANT
+          })
         }
       })
   }

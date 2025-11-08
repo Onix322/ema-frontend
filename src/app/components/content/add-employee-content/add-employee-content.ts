@@ -100,8 +100,17 @@ export class AddEmployeeContent {
     console.log(body)
     this.employeeService.edit(body).subscribe({
       next: (response) => {
-        alert("User (" + response.data.name + ") has been updated!")
+        this.notificationService.notify({
+          title: `Data has been modified successfully!`,
+          message: `${response.data.name}'s data has been modified!`,
+          importance: NotificationImportance.ACCEPTED
+        })
       }, error: (err) => {
+        this.notificationService.notify({
+          title: `Not modified!`,
+          message: `${err.message}`,
+          importance: NotificationImportance.ERROR
+        })
         throw new Error(err)
       }
     })

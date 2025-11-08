@@ -16,7 +16,7 @@ import {
 } from '@angular/material/table';
 import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatPaginator, MatPaginatorSelectConfig} from '@angular/material/paginator';
+import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {Car} from '../../../types/car.types';
 import {DisplayContent} from '../../../service/display-content';
@@ -29,6 +29,8 @@ import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ChangeStateDialog} from '../../dialogs/change-state-dialog/change-state-dialog';
 import {ChangeStateDialogData} from '../../../types/dialog.types';
 import {ReactiveFormsModule} from '@angular/forms';
+import {NotificationService} from '../../../service/notification-service';
+import {NotificationImportance} from '../../notification/notification';
 
 @Component({
   selector: 'app-cars-content',
@@ -71,7 +73,7 @@ export class CarsContent implements AfterViewInit {
 
   protected fetchingData = signal(false)
 
-  constructor(private dc: DisplayContent, private carService: CarService, private dialog: MatDialog) {
+  constructor(private notificationService: NotificationService, private dc: DisplayContent, private carService: CarService, private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource()
   }
 
@@ -115,10 +117,19 @@ export class CarsContent implements AfterViewInit {
     this.carService.delete(uuid)
       .subscribe({
         next: response => {
-          alert("Car has been deleted!")
+          this.notificationService.notify({
+            title: `Car has been deleted!`,
+            message: `Car has been deleted successfully!`,
+            importance: NotificationImportance.ACCEPTED
+          })
           this.dataSource.data = this.dataSource.data.filter(c => c.uuid !== uuid)
         },
         error: (err) => {
+          this.notificationService.notify({
+            title: `Car cannot be deleted`,
+            message: `${err.message}`,
+            importance: NotificationImportance.ACCEPTED
+          })
           throw new Error(err.message)
         }
       })
@@ -140,13 +151,25 @@ export class CarsContent implements AfterViewInit {
         })
     }, 500)
   }
+
   private updateDataSourceAfterDialogClosed(dialogRef: MatDialogRef<ChangeStateDialog>) {
     dialogRef.afterClosed().subscribe({
       next: (response: ApiResponse<Car>) => {
         if(response.data == null) {
+          this.notificationService.notify({
+            title: "State cannot be updated",
+            message: `${response.message}`,
+            importance: NotificationImportance.ERROR
+          })
           return
         }
         this.updateDataSource(response.data.uuid, response.data)
+
+        this.notificationService.notify({
+          title: "State has been updated",
+          message: `${response.message}`,
+          importance: NotificationImportance.ACCEPTED
+        })
       }
     })
   }
