@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, signal, ViewChild} from '@angular/core';
-import {MatButton, MatIconButton} from '@angular/material/button';
+import { AfterViewInit, Component, signal, ViewChild } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
 import {
   MatCell,
   MatCellDef,
@@ -14,23 +14,23 @@ import {
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
-import {MatIcon} from '@angular/material/icon';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {Car} from '../../../types/car.types';
-import {DisplayContent} from '../../../service/display-content';
-import {AddCarContent} from '../add-car-content/add-car-content';
-import {CarService} from '../../../service/car-service';
-import {ApiResponse} from '../../../types/api-response.types';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {ChangeStateDialog} from '../../dialogs/change-state-dialog/change-state-dialog';
-import {ChangeStateDialogData} from '../../../types/dialog.types';
-import {ReactiveFormsModule} from '@angular/forms';
-import {NotificationService} from '../../../service/notification-service';
-import {NotificationImportance} from '../../notification/notification';
+import { MatIcon } from '@angular/material/icon';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Car } from '../../../types/car.types';
+import { DisplayContent } from '../../../service/display-content';
+import { AddCarContent } from '../add-car-content/add-car-content';
+import { CarService } from '../../../service/car-service';
+import { ApiResponse } from '../../../types/api-response.types';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ChangeStateDialog } from '../../dialogs/change-state-dialog/change-state-dialog';
+import { ChangeStateDialogData } from '../../../types/dialog.types';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NotificationService } from '../../../service/notification-service';
+import { NotificationImportance } from '../../notification/notification';
 
 @Component({
   selector: 'app-cars-content',
@@ -83,7 +83,7 @@ export class CarsContent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  protected openDialog(car: Car){
+  protected openDialog(car: Car) {
     const body: ChangeStateDialogData = {
       car: car
     }
@@ -94,12 +94,12 @@ export class CarsContent implements AfterViewInit {
     this.updateDataSourceAfterDialogClosed(dialogRef)
   }
 
-  protected goToAdd(){
+  protected goToAdd() {
     AddCarContent.setUuid(null)
     return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
   }
 
-  protected goToEdit(uuid: string){
+  protected goToEdit(uuid: string) {
     AddCarContent.setUuid(uuid)
     return this.dc.displayContent(AddCarContent, this.dc.content?.nativeElement)
   }
@@ -137,25 +137,23 @@ export class CarsContent implements AfterViewInit {
 
   private getAll() {
     this.fetchingData.set(true)
-    setTimeout(() => {
-      this.carService.getAll()
-        .subscribe({
-          next: (response: ApiResponse<Car[]>) => {
-            this.dataSource.data = [...response.data];
-            this.fetchingData.set(false)
-          },
-          error: (err) => {
-            this.fetchingData.set(false)
-            throw new Error(err)
-          }
-        })
-    }, 500)
+    this.carService.getAll()
+      .subscribe({
+        next: (response: ApiResponse<Car[]>) => {
+          this.dataSource.data = [...response.data];
+          this.fetchingData.set(false)
+        },
+        error: (err) => {
+          this.fetchingData.set(false)
+          throw new Error(err)
+        }
+      })
   }
 
   private updateDataSourceAfterDialogClosed(dialogRef: MatDialogRef<ChangeStateDialog>) {
     dialogRef.afterClosed().subscribe({
       next: (response: ApiResponse<Car>) => {
-        if(response.data == null) {
+        if (response.data == null) {
           this.notificationService.notify({
             title: "State cannot be updated",
             message: `${response.message}`,

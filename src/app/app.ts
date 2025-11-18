@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, ElementRef, signal, Type, ViewChild, ViewContainerRef} from '@angular/core';
-import {MatButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
-import {EmployeeContent} from './components/content/employee-content/employee-content';
-import {QuickActions} from './components/content/quick-actions/quick-actions';
-import {MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle} from '@angular/material/expansion';
-import {CarsContent} from './components/content/cars-content/cars-content';
-import {DisplayContent} from './service/display-content';
-import {Notification} from './components/notification/notification';
-import {NotificationService} from './service/notification-service';
+import { AfterViewInit, Component, ElementRef, signal, Type, ViewChild, ViewContainerRef } from '@angular/core';
+import { MatButton } from '@angular/material/button';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { MatIcon } from '@angular/material/icon';
+import { CarsContent } from './components/content/cars-content/cars-content';
+import { EmployeeContent } from './components/content/employee-content/employee-content';
+import { QuickActions } from './components/content/quick-actions/quick-actions';
+import { DisplayContent } from './service/display-content';
+import { NotificationService } from './service/notification-service';
 
 //measured in px
 type WindowDimensions = {
@@ -36,7 +35,7 @@ type LayoutSetting = {
 
 export class App implements AfterViewInit {
 
-  @ViewChild("content", {read: ElementRef<HTMLElement>})
+  @ViewChild("content", { read: ElementRef<HTMLElement> })
   protected contentRef!: ElementRef<HTMLElement>
   protected readonly title = signal('ema-frontend');
   protected defaultRowHeight = 1;
@@ -70,6 +69,7 @@ export class App implements AfterViewInit {
     this.layoutSettings = this.initLayout()
     this.dc.vcr = this.vcr
     this.notificationService.setHost(this.vcr)
+
   }
 
   ngAfterViewInit() {

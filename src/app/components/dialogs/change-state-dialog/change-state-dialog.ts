@@ -1,5 +1,5 @@
-import {Component, Inject, ViewChild} from '@angular/core';
-import {MatButton} from "@angular/material/button";
+import { Component, Inject, ViewChild } from '@angular/core';
+import { MatButton } from "@angular/material/button";
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -8,13 +8,13 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from "@angular/material/dialog";
-import {MatFormField, MatLabel} from "@angular/material/form-field";
-import {MatIcon} from "@angular/material/icon";
-import {MatOption, MatSelect} from "@angular/material/select";
-import {Car, CarState} from '../../../types/car.types';
-import {ChangeStateDialogData} from '../../../types/dialog.types';
-import {CarService} from '../../../service/car-service';
-import {ApiResponse} from '../../../types/api-response.types';
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatOption, MatSelect } from "@angular/material/select";
+import { Car, CarState } from '../../../types/car.types';
+import { ChangeStateDialogData } from '../../../types/dialog.types';
+import { CarService } from '../../../service/car-service';
+import { ApiResponse } from '../../../types/api-response.types';
 
 @Component({
   selector: 'app-change-state-dialog',
@@ -54,7 +54,6 @@ export class ChangeStateDialog {
     this.carService.changeState(this.car)
       .subscribe({
         next: (response) => {
-          alert("Car state for " + response.data.numberPlate + " has been changed!")
           this.dialogRef.close(response)
         },
         error: err => {
@@ -64,6 +63,7 @@ export class ChangeStateDialog {
             data: null
           }
           this.dialogRef.close(errBody)
+
           throw new Error(err.message)
         }
       })

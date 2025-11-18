@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, signal, Type, ViewChild} from '@angular/core';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import { AfterViewInit, Component, signal, Type, ViewChild } from '@angular/core';
+import { MatButton, MatIconButton } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import {
   MatCell,
   MatCellDef,
@@ -15,23 +15,23 @@ import {
   MatTable,
   MatTableDataSource
 } from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {UserData} from '../../../types/user.types';
-import {DisplayContent} from '../../../service/display-content';
-import {AddEmployeeContent} from '../add-employee-content/add-employee-content';
-import {EmployeeService} from '../../../service/employee-service';
-import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {AssignDialog} from '../../dialogs/assign-dialog/assign-dialog';
-import {MatDialog, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {map, switchMap} from 'rxjs';
-import {CarService} from '../../../service/car-service';
-import {AssignCarDialogData} from '../../../types/dialog.types';
-import {ApiResponse} from '../../../types/api-response.types';
-import {NotificationService} from '../../../service/notification-service';
-import {NotificationImportance} from '../../notification/notification';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatFormField, MatInput, MatLabel } from '@angular/material/input';
+import { UserData } from '../../../types/user.types';
+import { DisplayContent } from '../../../service/display-content';
+import { AddEmployeeContent } from '../add-employee-content/add-employee-content';
+import { EmployeeService } from '../../../service/employee-service';
+import { MatMenu, MatMenuItem, MatMenuTrigger } from '@angular/material/menu';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AssignDialog } from '../../dialogs/assign-dialog/assign-dialog';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { map, switchMap } from 'rxjs';
+import { CarService } from '../../../service/car-service';
+import { AssignCarDialogData } from '../../../types/dialog.types';
+import { ApiResponse } from '../../../types/api-response.types';
+import { NotificationService } from '../../../service/notification-service';
+import { NotificationImportance } from '../../notification/notification';
 
 
 @Component({
@@ -180,19 +180,17 @@ export class EmployeeContent implements AfterViewInit {
 
   private getAll() {
     this.fetchingData.set(true)
-    setTimeout(() => {
-      this.employeeService.getAll().subscribe({
-        next: (response) => {
-          this.dataSource.data = [...response.data]
-          this.fetchingData.set(false)
-        },
-        error: (err) => {
-          this.dataSource.disconnect()
-          this.fetchingData.set(false)
-          throw new Error(err)
-        }
-      })
-    }, 500)
+    this.employeeService.getAll().subscribe({
+      next: (response) => {
+        this.dataSource.data = [...response.data]
+        this.fetchingData.set(false)
+      },
+      error: (err) => {
+        this.dataSource.disconnect()
+        this.fetchingData.set(false)
+        throw new Error(err)
+      }
+    })
   }
 
   private updatedDialogAfterClosedSuccessfully(dialogRef: MatDialogRef<AssignDialog>) {
